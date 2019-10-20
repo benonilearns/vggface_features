@@ -34,17 +34,17 @@ def get_features(file):
 main_df = pd.DataFrame()
 count = 0
 goal = len(cropped_paths)
-with out.get_writer() as writer:
-    for file in cropped_paths:
-        try:
-            preds = get_features(cropped_faces + file)
-            df = pd.DataFrame()
-            df['preds'] = preds.tolist()
-            df['image'] = str(file)
-            main_df = main_df.append(df, ignore_index = True)
-            count +=1
-            if count % 1000 == 0:
-                print("Done: " + str(count))
-                print("To go: " + str(goal - count))
-        except Exception as e:
-            print(e)
+
+for file in cropped_paths:
+    try:
+        preds = get_features(cropped_faces + file)
+        df = pd.DataFrame()
+        df['preds'] = preds.tolist()
+        df['image'] = str(file)
+        main_df = main_df.append(df, ignore_index = True)
+        count +=1
+        if count % 1000 == 0:
+            print("Done: " + str(count))
+            print("To go: " + str(goal - count))
+    except Exception as e:
+        print(e)
